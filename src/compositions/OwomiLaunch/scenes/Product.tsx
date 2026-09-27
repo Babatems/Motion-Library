@@ -9,10 +9,10 @@ import { SCENE } from "../timeline";
 const START = SCENE.product[0];
 const CONVERGE = 21.93; // "…in one clear picture"
 const BORN = 22.3;
-const BUDGET_AT = 24.15;
-const GOALS_AT = 26.95;
-const TOAST = 24.45; // "…go over"
-const HEADS_UP = 25.47; // "Not after."
+const BUDGET_AT = 23.95;
+const GOALS_AT = 26.7;
+const TOAST = 24.68; // right after "…go over"
+const HEADS_UP = 25.22; // "Not after."
 
 const ORBIT = { cx: 960, cy: 510, rx: 640, ry: 265 };
 
@@ -37,7 +37,7 @@ const CAM: [number, number, number, number, number, number, number, number][] = 
   [23.35, 960, 540, 960, 520, 0.93, 7, -7],
   [23.55, 960, 540, 960, 520, 0.93, 7, -7],
   [BUDGET_AT, center(CARD.budget).x, center(CARD.budget).y, 820, 610, 1.72, 3, -5],
-  [26.3, center(CARD.budget).x, center(CARD.budget).y, 800, 600, 1.78, 3, -6],
+  [26.02, center(CARD.budget).x, center(CARD.budget).y, 800, 600, 1.78, 3, -6],
   [GOALS_AT, center(CARD.goals).x, center(CARD.goals).y, 900, 540, 1.78, 4, 4],
   [28.3, center(CARD.goals).x, center(CARD.goals).y, 900, 540, 1.95, 3, 6],
 ];
@@ -67,7 +67,7 @@ const Toast: React.FC<{ t: number }> = ({ t }) => {
         gap: 18,
         alignItems: "flex-start",
         fontFamily: fonts.sans,
-        opacity: iv(t, [TOAST - 0.05, TOAST + 0.12], [0, 1]) * iv(t, [26.25, 26.5], [1, 0]),
+        opacity: iv(t, [TOAST - 0.05, TOAST + 0.12], [0, 1]) * iv(t, [26.0, 26.25], [1, 0]),
         translate: `${(1 - inP) * 80}px ${(1 - inP) * -20}px`,
         scale: 0.9 + inP * 0.1,
       }}
@@ -143,7 +143,7 @@ export const Product: React.FC = () => {
   const sx = cam(t, 3);
   const sy = cam(t, 4);
   const s = cam(t, 5) * (0.2 + born * 0.8);
-  const budgetFocus = iv(t, [BUDGET_AT - 0.4, BUDGET_AT], [0, 1]) * iv(t, [26.3, 26.7], [1, 0]);
+  const budgetFocus = iv(t, [BUDGET_AT - 0.4, BUDGET_AT], [0, 1]) * iv(t, [26.05, 26.45], [1, 0]);
   const goalsFocus = iv(t, [GOALS_AT - 0.4, GOALS_AT], [0, 1]);
 
   return (
@@ -264,9 +264,9 @@ export const Product: React.FC = () => {
           fontWeight: 600,
           fontSize: 26,
           boxShadow: "0 20px 50px -15px rgba(14,107,79,0.7)",
-          opacity: iv(t, [27.65, 27.85], [0, 1]),
-          scale: iv(t, [27.65, 28.1], [0.6, 1], ease.pop),
-          translate: `0px ${iv(t, [27.65, 28.1], [20, 0])}px`,
+          opacity: iv(t, [27.3, 27.5], [0, 1]),
+          scale: iv(t, [27.3, 27.75], [0.6, 1], ease.pop),
+          translate: `0px ${iv(t, [27.3, 27.75], [20, 0])}px`,
         }}
       >
         <Icon name="trending-up" size={26} strokeWidth={2.4} />

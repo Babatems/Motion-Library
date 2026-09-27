@@ -12,7 +12,7 @@ const LINES = [
   { at: 30.15, title: "Hosted in Canada.", sub: "Montréal region · PIPEDA & Québec Law 25" },
   { at: 31.55, title: "Et en français, aussi.", sub: "" },
 ];
-const TOGGLE = 31.95;
+const TOGGLE = 32.3;
 const BANKS: Bank[] = ["rbc", "td", "scotiabank", "bmo", "cibc"];
 
 const Badge: React.FC<{ t: number }> = ({ t }) => {

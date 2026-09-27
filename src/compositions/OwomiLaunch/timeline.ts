@@ -1,6 +1,6 @@
 // Master timeline, in SECONDS. Every cue below is locked either to the
 // music's beat grid or to a word timestamp from the voiceover
-// (words measured with Whisper, see README in this folder).
+// (words measured with Whisper on the generated voice clips).
 
 export const FPS = 60;
 export const sec = (s: number) => Math.round(s * FPS);
@@ -29,8 +29,8 @@ export const VO_AT = {
   b1: 12.4,
   b1b: 14.05,
   b2: 16.0,
-  b3: 23.55,
-  b4: 26.35,
+  b3: 23.3,
+  b4: 25.95,
   c1: 28.75,
   brand: 33.25, // "Owó-mi" reused from b1 (trimmed) — a sonic logo
   c2b: 34.05,
@@ -75,18 +75,18 @@ export const WORDS: Record<string, { words: Word[]; end: number }> = {
     ],
   },
   b3: {
-    end: 26.15,
+    end: 25.9,
     words: [
-      { w: "Know", t: 23.67 }, { w: "before", t: 24.01 }, { w: "you", t: 24.29 },
-      { w: "go", t: 24.47 }, { w: "over.", t: 24.61 }, { w: "Not", t: 25.47 },
-      { w: "after.", t: 25.71 },
+      { w: "Know", t: 23.42 }, { w: "before", t: 23.76 }, { w: "you", t: 24.04 },
+      { w: "go", t: 24.22 }, { w: "over.", t: 24.36 }, { w: "Not", t: 25.22 },
+      { w: "after.", t: 25.46 },
     ],
   },
   b4: {
-    end: 28.47,
+    end: 28.07,
     words: [
-      { w: "And", t: 26.47 }, { w: "watch", t: 26.79 }, { w: "every", t: 27.15 },
-      { w: "goal", t: 27.67 }, { w: "get", t: 27.93 }, { w: "closer.", t: 28.15 },
+      { w: "And", t: 26.07 }, { w: "watch", t: 26.39 }, { w: "every", t: 26.75 },
+      { w: "goal", t: 27.27 }, { w: "get", t: 27.53 }, { w: "closer.", t: 27.75 },
     ],
   },
   c1: {
@@ -112,6 +112,6 @@ export const CAPTIONED = ["a2", "b2", "b3", "b4"] as const;
 // Speech windows used to duck the music under the voice
 export const SPEECH: [number, number][] = [
   [0.6, 2.5], [3.0, 8.95], [9.45, 11.75], [12.45, 13.35], [14.1, 15.45],
-  [16.05, 23.0], [23.6, 26.2], [26.4, 28.5], [28.8, 32.85], [33.28, 33.8],
+  [16.05, 23.0], [23.37, 25.95], [26.02, 28.12], [28.8, 32.85], [33.28, 33.8],
   [34.1, 35.95],
 ];

@@ -24,7 +24,7 @@ const PEAK: Record<string, number> = {
 const WAV = new Set(["reverse-swell", "reverse-air"]);
 // Master gains — keeps the summed mix under -1 dBFS with the voice on top
 const SFX_GAIN = 0.62;
-const VO_GAIN = 0.92;
+const VO_GAIN = 1;
 
 // [event time (s), sfx, volume]
 const CUES: [number, string, number][] = [
@@ -56,9 +56,9 @@ const CUES: [number, string, number][] = [
   [DROP1 + 0.12, "sweep-small", 0.4],
   [13.2, "click-tone", 0.45],
   [14.45, "sweep-short", 0.4], // the name splits
-  [14.72, "select", 0.45], // "my"
-  [15.06, "select", 0.45], // "money"
-  [15.12, "coins-touch", 0.45],
+  [14.72, "select", 0.22], // "my"
+  [15.06, "select", 0.22], // "money"
+  [15.45, "coins-touch", 0.35],
   [15.95, "whoosh-fast", 0.45],
   // Product — accounts orbit in
   [16.0, "pop-long", 0.45],
@@ -68,35 +68,33 @@ const CUES: [number, string, number][] = [
       [at - 0.14, "pop-message", 0.3],
     ],
   ),
-  [22.28, "whoosh-cinematic", 0.45], // converge
-  [22.35, "bass-hit-future", 0.35], // the one clear picture
-  [22.45, "chime-confirm", 0.35],
-  [22.7, "coins-clink", 0.4],
-  [23.4, "tech-slide", 0.6],
-  [23.95, "whoosh-air", 0.35], // camera → budget
-  [24.5, "pop-message", 0.5], // toast
-  [24.55, "notify-hint", 1.0],
-  [25.5, "chime-correct", 0.25], // heads-up sent
-  [26.35, "sweep-short", 0.3],
-  [26.7, "whoosh-air", 0.35], // camera → goals
-  [27.9, "chime-positive", 0.45], // on track
-  [28.02, "coins-clink", 0.4],
+  [22.05, "whoosh-cinematic", 0.35], // converge
+  [22.33, "bass-hit-future", 0.22], // the one clear picture
+  [23.0, "chime-confirm", 0.3],
+  [23.05, "coins-clink", 0.3],
+  [23.3, "tech-slide", 0.45],
+  [23.8, "whoosh-air", 0.22], // camera → budget
+  [24.7, "pop-message", 0.45], // toast
+  [24.75, "notify-hint", 0.9],
+  [25.24, "click-tone", 0.25], // heads-up sent
+  [26.05, "sweep-short", 0.2],
+  [26.5, "whoosh-air", 0.18], // camera → goals
+  [28.12, "chime-positive", 0.4], // on track — rings out on the lift
   // Trust — dark sweep on the second lift
   [DROP2 + 0.02, "bass-hit", 0.55],
-  [DROP2 + 0.06, "whoosh-deep-impact", 0.26],
   [DROP2 + 0.12, "sweep-small", 0.38],
   [28.45, "pop-long", 0.35],
   ...[28.83, 30.15, 31.55].flatMap((at): [number, string, number][] => [
     [at - 0.16, "click-classic", 0.38],
   ]),
   ...[0, 1, 2, 3, 4].map((i): [number, string, number] => [29.5 + i * 0.07, "click-tone", 0.2]),
-  [31.97, "tap-switch", 0.6], // EN → FR
+  [32.34, "tap-switch", 0.45], // EN → FR, in the gap after "français,"
   // CTA — hero reprise
   [33.02, "whoosh-air", 0.45],
   [33.9, "bass-hit-future", 0.3],
   [33.12, "sweep-short", 0.2],
   [33.95, "click-tone", 0.3],
-  [35.95, "pop-long", 0.35],
+  [35.95, "pop-long", 0.3],
   [36.3, "sweep-short", 0.15],
   [CLICK, "click-classic", 0.6],
   [CLICK + 0.1, "chime-confirm", 0.5],
@@ -123,7 +121,7 @@ const musicVolume = (f: number) => {
   const base = t < DROP1 ? 0.62 : 0.5;
   const fadeIn = interpolate(t, [0, 0.08], [0, 1], { extrapolateRight: "clamp" });
   const fadeOut = interpolate(t, [37.5, END], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  return base * (1 - duck * 0.55) * fadeIn * fadeOut;
+  return base * (1 - Math.min(duck * 0.72, 0.86)) * fadeIn * fadeOut;
 };
 
 const SoundTrack: React.FC = () => (
