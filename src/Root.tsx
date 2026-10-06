@@ -12,10 +12,20 @@ import { Intro } from "./compositions/LullLaunch/scenes/Intro";
 import { Problem } from "./compositions/LullLaunch/scenes/Problem";
 import { Solution } from "./compositions/LullLaunch/scenes/Solution";
 import { SCENES, TOTAL_FRAMES } from "./compositions/LullLaunch/theme";
+import { TaivPromo } from "./compositions/TaivPromo/TaivPromo";
+import { END as TAIV_END, FPS as TAIV_FPS, sec as taivSec } from "./compositions/TaivPromo/timeline";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="TaivPromo"
+        component={TaivPromo}
+        durationInFrames={taivSec(TAIV_END)}
+        fps={TAIV_FPS}
+        width={1920}
+        height={1080}
+      />
       <Composition
         id="OwomiLaunch"
         component={OwomiLaunch}
