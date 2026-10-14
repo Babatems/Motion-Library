@@ -19,6 +19,8 @@ Practice repo for product launch / promo videos. Next up (from ~Oct 2026): spec 
 ## Finished videos
 | Comp ID | Output | Specs | What it is |
 |---|---|---|---|
+| `SkipGoodPart` | `out/skip-goodpart-20s.mp4` | 1920×1080, **60fps**, 20s | Spec for Skip (SkipTheDishes, Winnipeg HQ). "Skip to the good part": hassles struck out by a skip-ad button → drop/logo → app walkthrough (feed, tap, live tracker) → 450 cities → orange end card. Male VO (Chatterbox TTS). Music "Take this Higher" (drop at 4.1s). Render with `--jpeg-quality=95` |
+| `SkipCravings` | `out/skip-cravings-10s.mp4` | 1920×1080, **60fps**, 10s | Second Skip cut, deliberately different: no VO, orange + photography, "Craving ___?" word/photo swap on every beat of "Funkee Monkeee" (120 BPM = 30 frames/beat) → order card → cream end card |
 | `TaivPromo` | `out/taiv-promo.mp4` | 1920×1080, **60fps**, 25.2s | Spec pitch for Taiv (Winnipeg, AI business-TV). Female VO (Kokoro TTS `af_heart`) + Mixkit music/SFX, all timed to the beat grid and Whisper word timestamps. Outro: cursor clicks "Get started", then a 2s motion-blurred push into the button. First client spec piece; corner babatems mark. Render with `--jpeg-quality=95` |
 | `OwomiLaunch` | `out/owomi-launch.mp4` | 1920×1080, **60fps**, 39s | Launch film for Owó-mi (Canadian budgeting app). VO + music + ~70 SFX cues, all timed in seconds to the beat grid and Whisper word timestamps. The most polished piece, and the reference for client work |
 | `LullLaunch` | `out/lull-launch.mp4` | 1920×1080, 30fps | Launch film for "Lull" (notification-calming app). Music + SFX, no VO. Custom `TransitionSeries` transitions. Each scene is also registered on its own under the `LullLaunch-Scenes` folder for previewing |
@@ -49,6 +51,8 @@ src/compositions/<Name>/
 - Captions: word-level, from `WORDS` in `timeline.ts`. Only lines not already typeset in the scene are captioned (`CAPTIONED`).
 - Music/SFX used so far are royalty-free (e.g. Mixkit). Keep it that way for client work, and note the source in a comment.
 - Female VO without a voice actor: Kokoro TTS (`kokoro-onnx`, voice `af_heart`) run via `uv`, then high-pass/EQ/compression with `pedalboard` and normalised to ~−12.5 dBFS speech / −1 dBFS peaks. Spell brand names phonetically for the TTS (Taiv → "Tyve"). Word timings come from faster-whisper `small.en` (pass numpy audio; the bundled `av` can't open files).
+- More human VO (used on Skip): Chatterbox TTS (`chatterbox-tts`, Resemble AI, MIT) in a uv env on uv-managed Python 3.11 (system 3.11 lacks lzma), plus `setuptools<81` for its watermarker. Run on **CPU** (~30s/line on the M2; MPS is 4× slower). Its built-in voice is male. It garbles very short lines ("Skip it."), so generate them inside a longer phrase and cut at the pauses. Pick takes by UTMOS (`torch.hub` `tarepan/SpeechMOS` `utmos22_strong`; ≥4.4 is good) plus a Whisper transcript check.
+- Brand fonts can be commercial: Skip's JET Sans Digital (Bold Monday) forbids redistribution, so it isn't in the repo. Figtree stands in, and `Skip/brand.ts` notes the swap. Check a webfont's licence (fontTools name table) before bundling it.
 - Remotion's bundled ffmpeg (`npx remotion ffmpeg`) lacks most audio filters — do audio processing in Python instead.
 
 ## Look like a motion designer made it (feedback on TaivPromo: "looks heavily AI")
@@ -78,6 +82,7 @@ src/compositions/<Name>/
 `@remotion/transitions`, `@remotion/motion-blur` (`CameraMotionBlur`: wrap a whole scene from its first frame — its samples run ~¾ frame ahead, so switching it on mid-move makes a jump), `@remotion/shapes`, `@remotion/paths`, `@remotion/google-fonts`, `@remotion/media-utils`, `@remotion/noise`, `@remotion/zod-types`, `zod`.
 
 ## Client work (Winnipeg companies)
+- Skip (`src/compositions/Skip/`): one folder holding both cuts (`goodpart/`, `cravings/`) on a shared `brand.ts`, `logo.ts` (maple leaf split out of the P), `icons.ts` (PIE icons), `components/` (`SkipLogo`, `SlantPanel` 15° wipes, `Phone` app screens) and `sfx.ts` (PEAK map). Food photos are Unsplash (free licence), plus Skip's own hero pasta and gift card. skipthedishes.com is behind Cloudflare: read it with Claude in Chrome or the Wayback Machine (`web.archive.org/web/2026id_/…`).
 - One composition folder and one `public/<client>/` folder per company. Start from the OwomiLaunch structure.
 - Pull real brand assets (logo, colours, fonts, product screenshots, tone of voice) from the company's site, and record the source of each token in `brand.ts`.
 - Keep them short and polished: 1080p (16:9, plus 9:16 or 1:1 cuts for social when useful), 15–45s, with a clear end card showing the company's name and CTA.

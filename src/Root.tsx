@@ -12,12 +12,32 @@ import { Intro } from "./compositions/LullLaunch/scenes/Intro";
 import { Problem } from "./compositions/LullLaunch/scenes/Problem";
 import { Solution } from "./compositions/LullLaunch/scenes/Solution";
 import { SCENES, TOTAL_FRAMES } from "./compositions/LullLaunch/theme";
+import { SkipCravings } from "./compositions/Skip/cravings/SkipCravings";
+import { END as CRAVINGS_END, FPS as CRAVINGS_FPS, sec as cravingsSec } from "./compositions/Skip/cravings/timeline";
+import { SkipGoodPart } from "./compositions/Skip/goodpart/SkipGoodPart";
+import { END as GOODPART_END, FPS as GOODPART_FPS, sec as goodpartSec } from "./compositions/Skip/goodpart/timeline";
 import { TaivPromo } from "./compositions/TaivPromo/TaivPromo";
 import { END as TAIV_END, FPS as TAIV_FPS, sec as taivSec } from "./compositions/TaivPromo/timeline";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="SkipGoodPart"
+        component={SkipGoodPart}
+        durationInFrames={goodpartSec(GOODPART_END)}
+        fps={GOODPART_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="SkipCravings"
+        component={SkipCravings}
+        durationInFrames={cravingsSec(CRAVINGS_END)}
+        fps={CRAVINGS_FPS}
+        width={1920}
+        height={1080}
+      />
       <Composition
         id="TaivPromo"
         component={TaivPromo}
